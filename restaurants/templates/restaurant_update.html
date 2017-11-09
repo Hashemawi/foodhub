@@ -1,0 +1,16 @@
+
+
+
+{% extends 'base.html' %}
+
+{% block heading %} Restaurant Update
+
+{% endblock heading %}
+
+{% block content %}
+	<form action="{% url 'update' restaurant_id=item.id %}" method="POST">
+	{% csrf_token%}
+	{{form.as_p}}
+	<input type="submit" value="Update">
+	</form>
+{% endblock content%}
