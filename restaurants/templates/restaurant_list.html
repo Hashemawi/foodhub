@@ -1,22 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>
-		Welcome
-	</title>
-</head>
-<body>
-{%for item in restaurant_items%}
-	<ul>
-		<li>{{item.name}}</li>
-		<li>{{item.description}}</li>
-		<li>{{item.opening_time}}</li>
-		<li>{{item.closing_time}}</li>
-	</ul>
+
+
+
+
+{% extends 'base.html' %}
+
+{% block heading %} the specific one {% endblock heading %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-3">Restaurants</h1>
+
+  		<a class="btn btn-primary btn-lg" href="{% url 'create' %}" role="button">Create</a>
+  </p>
+</div>
+
+
+	{%for item in restaurant_items%}
+	<div class="row ">
+		<div class="card col-xs-12 col-md-4" style="width: 20rem;">
+	<div class="card-body">
+				<h4 class="card-title">{{item.name}}<small></h4>
+				<p class="card-text">{{item.description|linebreaks|truncatechars:30}}</p>
+				{% if item.logo %}
+					<img class="card-img-top" src="{{item.logo.url}}" alt="Card image cap">
+				{% endif %}
+				<a href="{% url 'detail' restaurant_id=item.id %}" class="btn btn-outline-primary">Details</a>
+				<a href="{% url 'update' restaurant_id=item.id %}" class="btn btn-outline-info">Update</a>
+				<a href="{% url 'delete' restaurant_id=item.id %}" class="btn btn-outline-danger">Delete</a>
+				
+
+			</div>
+		</div>
+	</div>
 	{% endfor %}
+	</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if restaurant_items.has_previous %}
+            <a href="?page={{ restaurant_items.previous_page_number }}">previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ restaurant_items.number }} of {{ restaurant_items.paginator.num_pages }}.
+        </span>
 
-</body>
-</html>
+        {% if restaurant_items.has_next %}
+            <a href="?page={{ restaurant_items.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
 
-
+{% endblock content%}

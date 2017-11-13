@@ -1,16 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>
-		the specific one
-	</title>
-</head>
-<body>
+
+
+
+
+
+{% extends 'base.html' %}
+
+{% block heading %} the specific one {% endblock heading %}
+
+{% block content %}
 	<ul>
 		<li>{{item.name}}</li>
 		<li>{{item.description}}</li>
 		<li>{{item.opening_time}}</li>
 		<li>{{item.closing_time}}</li>
+		{% if item.logo %}
+			<li><img class="card-img-top" src="{{item.logo.url}}" alt="Card image cap"></li>
+		{% endif %}
+
+
 	</ul>
-</body>
-</html>
+
+{% endblock content%}
